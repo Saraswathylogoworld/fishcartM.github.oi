@@ -1,0 +1,105 @@
+
+{% extends 'findex2.html' %}
+{% block content %}
+{% load static %}
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>Cart list</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+  <!--================Cart Area =================-->
+  <section class="cart_area section_padding">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="row">
+          <table name="cart" id="cart" class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">subtotal</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in data7 %}
+              <tr>
+                <td>
+                  <div class="media">
+                    <div class="col-sm-3 hidden-xs">
+                      <img src="{{i.productid.img.url}}" alt=""/>
+                    </div>
+                    <div class="col-sm-10">
+                      <h4 class="nomargin"><b>{{i.productid.pname}}</b></h4>
+                      <input type="hidden" class="pid" id="pid" value="{{i.id}}">
+                    </div>
+                  </div>
+                </td>
+                <td data-th="price">
+                  <p>
+                    <input name="price" type="text" id="price" class="form-control text-center" value="{{i.productid.price}}">
+                  </p>  
+                  <br><br>
+                </td>
+                <td data-th="quantity">
+                  <input value="{{i.quantity}}" class="quan" type="number"  min="1" max="20" name="quan" id="quan{{i.id}}">
+                </td>
+                <td data-th="subtotal">
+                  <input type="text" class="form-control text-center" name="total"  value="{{i.total}}" id="tot_amount" >
+                  <br><br>
+                </td>
+                <td class="actions" data-th="">
+                  <a href="{% url 'wdelete' did=i.id %}"><i class="ti-trash"></i></a>
+                </td>
+              </tr> 
+            {% endfor %}
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="{% url 'wproduct' category="all" %}">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="{% url 'wcheckout' %}">Proceed to checkout</a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+    <!--::footer_part start::-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+    $(".quan").on('change',function() {
+    // Get the row containing the input
+    var row = $(this).closest('tr');
+    // var p = $('#price').val();
+    var pid = parseInt(row.find(".pid").val());    
+    var qty = parseInt(row.find(this).val());
+    var price = parseInt(row.find('#price').val());
+    // var total =  parseInt(qty)*parseInt(price);
+    location.reload(true);
+    //  $("#tot_amount").val(total);
+            $.ajax({
+                    url: "{% url 'cart_update' %}",
+                    method: 'post',
+                    cache: false,
+                    data: {
+                        pid: pid,
+                        qty: qty,
+                        price: price,
+                    }
+                });
+
+    });
+});  
+</script>
+
+{% endblock %}

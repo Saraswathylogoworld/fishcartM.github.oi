@@ -1,0 +1,60 @@
+{% extends 'findex2.html' %}
+{% block content %}
+{% load static %}
+
+<section class="breadcrumb_part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <h2>View Checkout Conformation</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<center>
+<div class="col-lg-4">
+    <div class="payment_item active"><div class="order_box">
+      <h2>Your Order</h2>
+      <ul class="list">
+        {% for i in pdata %}
+        <li>
+          <a href="#">Product
+            <span>Price</span>
+          </a>
+        </li>
+        <h4><span class="price" style="color:black"><i class="flaticon-shopping-cart-black-shape"></i> <b>{{count}}</b></span></h4><br>
+        <li>
+          <a href="#">{{i.productid.pname}}
+            <span>{{i.total}}</span>
+          </a>
+        </li> 
+        <li>
+          <a href="#">Total
+            <span>{{total.total__sum}}/-</span>
+          </a>
+        </li>
+        <li>
+          <a class="btn_3" value="Cancel" href="{% url 'Fdelete' cid=i.id %}">Cancel Order</a>
+        </li>
+      </ul>
+      {% endfor %}
+      <div>
+        <li>
+          <a class="btn_3" href="{% url 'wcheckout' %}" onclick="myFunction()">fill Checkout Details</a>
+        </li>
+      </div>
+    </div>  
+</div>
+</center>
+<!--================End Checkout Area =================-->
+  <script>
+    function myFunction() {
+      confirm("conform your order!");
+    }
+  </script>
+{% endblock %}
+
+
+

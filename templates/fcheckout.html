@@ -1,0 +1,103 @@
+{% extends 'findex2.html' %}
+{% block content %}
+{% load static %}
+
+    <!-- Header part end-->
+
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>Checkout</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+  <!--================Checkout Area =================-->
+  <section class="checkout_area section_padding">
+    <div class="container">
+      <div class="returning_customer">
+        <div class="check_title">
+          <h2>
+            Returning Customer?
+            <a href="{% url 'wlogin' %}">Click here to login</a>
+          </h2>
+        </div>
+        <p>
+          If you have shopped with us before, please enter your details in the
+          boxes below. If you are a new customer, please proceed to the
+          Billing & Shipping section.
+        </p>
+      </div>
+      <div class="billing_details">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>Billing Details</h3>
+            <form class="row contact_form" action="{% url 'w_check' %}" method="post">
+              {% csrf_token %}
+              <div class="col-md-6 form-group p_star">
+                <input type="text" class="form-control" id="first"  name="fname" placeholder="Fullname">
+                <!-- <span class="placeholder" data-placeholder="Fullname"></span> -->
+              </div>
+              <div class="col-md-6 form-group p_star">
+                <input type="text" class="form-control" id="number" name="mobile" placeholder="Phone number">
+                <!-- <span class="placeholder" data-placeholder="Phone number"></span> -->
+              </div>
+              <div class="col-md-6 form-group p_star">
+                <input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
+                <!-- <span class="placeholder" data-placeholder="Email Address"></span> -->
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input type="text" class="form-control" id="adds" name="address" placeholder="Address">
+                <!-- <span class="placeholder" data-placeholder="Address"></span> -->
+              </div>
+              <div class="Checkout">
+                <input type="submit" value="Continue To Checkout">
+                <a href="{% url 'windex2' %}"></a>
+              </div>
+              <p><h1>Please note this...(WARNING)
+                      First check the order details then fill the form to proceed to checkout 
+              </h1></p>
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <div class="payment_item active"><div class="order_box">
+              <h2>Your Order</h2>
+              <ul class="list">
+                <li>
+                  <a href="#">Product
+                    <span>Price</span>
+                  </a>
+                </li>
+                <h4><span class="price" style="color:black"><i class="flaticon-shopping-cart-black-shape"></i> <b>{{count}}</b></span></h4><br>
+                {% for i in data %}
+                <li>
+                  <a href="#">{{i.productid.pname}}
+                    <span>{{i.total}}</span>
+                  </a>
+                </li> 
+                {% endfor %}
+                <li>
+                  <a href="#">Total
+                    <span>{{total.total__sum}}/-</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="btn_3" href="{% url 'viewcheck' %}">Conform Order</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Checkout Area =================-->
+
+  <!--::footer_part start::-->
+  {% endblock %}

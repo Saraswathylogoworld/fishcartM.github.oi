@@ -1,0 +1,82 @@
+{% extends 'findex2.html' %}
+{% block content %}
+{% load static %}
+
+    <!-- breadcrumb part start-->
+    <section class="breadcrumb_part single_product_breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb part end-->
+
+  <!--================Single Product Area =================-->
+{% for i in data2 %}
+<form method="post" action="{% url 'fish_cart' sid=i.id %}" >
+  {% csrf_token %}
+  <div class="product_image_area">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="product_img_slide owl-carousel">
+           
+            <div class="single_product_img">
+              <img src="{{i.img.url}}" alt="#" class="img-fluid">
+            </div>
+            <div class="single_product_img">
+              <img src="{{i.img.url}}" alt="#" class="img-fluid">
+            </div>
+            <div class="single_product_img">
+              <img src="{{i.img.url}}" alt="#" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="single_product_text text-center">
+            <h3>{{i.pname}}</h3>
+            <p>
+                ${{i.price}}<input type="hidden" value="{{i.price}}" id="price">
+            </p>
+            <div class="card_area">
+                <div class="product_count_area">
+                    <p>Quantity</p>
+                    <div class="product_count d-inline-block">
+                      <input class="product_count_item input-number" name="quan" type="number" value="1" min="0" max="10" id="quan">
+                    </div>
+                    <p>Total</p>
+                    <div class="product_count d-inline-block">
+                      <input class="product_count_item input-number" name="total" type="text" id="total">
+                      <input type="hidden" name="id" value="{{request.session.id}}">
+                    </div>
+                </div>
+              <div class="add_to_cart">
+                <input type="submit" class="btn_3" value="Add to Cart">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %}
+  <!--================End Single Product Area =================-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+     $("#quan").change(function(){
+         var quantity = $('#quan').val()
+         var price = $('#price').val()
+         var subtotal = quantity*price
+         $('#total').val(subtotal)
+        //  alert(subtotal)
+      });
+    });  
+  </script>
+      
+{% endblock %}
